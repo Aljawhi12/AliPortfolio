@@ -1,254 +1,409 @@
-@model AliPortfolio.Models.PortfolioViewModel
-@{
-    Layout = "_Layout";
-    ViewData["Title"] = "Ali Aljawhi – .NET Developer";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ali Aljawhi – .NET Developer</title>
+<meta name="description" content="Backend .NET Developer specializing in ASP.NET Core, Clean Architecture, and scalable systems."/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#00d4aa', dark: '#0a0f1e', surface: '#111827',
+        card: '#1a2235', border: '#1e2d47', muted: '#64748b'
+      },
+      fontFamily: {
+        mono: ['"JetBrains Mono"','Consolas','monospace'],
+        sans: ['"DM Sans"','system-ui','sans-serif'],
+        display: ['"Space Grotesk"','sans-serif']
+      },
+      keyframes: {
+        fadeUp: {'0%':{opacity:'0',transform:'translateY(24px)'},'100%':{opacity:'1',transform:'translateY(0)'}},
+        blink: {'0%,100%':{opacity:'1'},'50%':{opacity:'0'}},
+        pulse2: {'0%,100%':{opacity:'1'},'50%':{opacity:'.4'}},
+      },
+      animation: {
+        'fade-up':'fadeUp 0.7s ease forwards',
+        'blink':'blink 1.1s step-end infinite',
+        'pulse2':'pulse2 2s ease-in-out infinite',
+      }
+    }
+  }
 }
+</script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:#0a0f1e;margin:0;}
+  .grid-bg{
+    background-image:linear-gradient(rgba(0,212,170,.025) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(0,212,170,.025) 1px,transparent 1px);
+    background-size:44px 44px;
+  }
+  ::-webkit-scrollbar{width:5px;}
+  ::-webkit-scrollbar-track{background:#0a0f1e;}
+  ::-webkit-scrollbar-thumb{background:#1e2d47;border-radius:3px;}
+  ::selection{background:#00d4aa22;color:#00d4aa;}
+  .tag{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:.7rem;font-family:'JetBrains Mono',monospace;font-weight:500;background:rgba(0,212,170,.08);color:#00d4aa;border:1px solid rgba(0,212,170,.2);}
+  .card-hover{transition:all .3s ease;}
+  .card-hover:hover{transform:translateY(-5px);border-color:rgba(0,212,170,.35)!important;box-shadow:0 10px 35px rgba(0,212,170,.08);}
+  .nav-link{position:relative;color:#94a3b8;transition:color .2s;font-family:'JetBrains Mono',monospace;font-size:.8rem;text-decoration:none;}
+  .nav-link:hover{color:#00d4aa;}
+  .nav-link::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:#00d4aa;transition:width .25s;}
+  .nav-link:hover::after{width:100%;}
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .65s ease,transform .65s ease;}
+  .revealed{opacity:1;transform:translateY(0);}
+  .timeline-line{width:1px;flex:1;margin-top:8px;background:linear-gradient(#00d4aa44,transparent);}
+  .dot-teal{width:11px;height:11px;border-radius:50%;background:#00d4aa;box-shadow:0 0 10px #00d4aa88;flex-shrink:0;margin-top:5px;}
+  .dot-blue{width:11px;height:11px;border-radius:50%;background:#3b82f6;box-shadow:0 0 10px #3b82f688;flex-shrink:0;margin-top:5px;}
+  .glow-orb{position:absolute;border-radius:50%;pointer-events:none;background:radial-gradient(circle,#00d4aa,transparent 70%);opacity:.045;}
+</style>
+</head>
+<body class="grid-bg text-slate-300 font-sans antialiased">
 
-<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
-<section id="hero" class="min-h-screen flex items-center pt-20 pb-10 relative overflow-hidden">
-    <!-- Glow orb -->
-    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-5"
-         style="background: radial-gradient(circle, #00d4aa, transparent 70%); pointer-events:none;"></div>
-
-    <div class="max-w-6xl mx-auto px-6 w-full">
-        <div class="flex flex-col lg:flex-row items-center gap-16">
-            <div class="flex-1 space-y-6">
-                <div class="font-mono text-sm text-primary opacity-80 tracking-widest uppercase">
-                    &gt; hello world
-                </div>
-
-                <h1 class="font-display text-5xl md:text-6xl font-bold leading-tight text-slate-100">
-                    @Model.Personal.Name
-                </h1>
-
-                <div class="font-mono text-xl text-primary font-semibold flex items-center gap-2">
-                    <span>@Model.Personal.Title</span>
-                    <span class="animate-blink text-muted">_</span>
-                </div>
-
-                <p class="text-slate-400 leading-relaxed max-w-xl text-sm md:text-base">
-                    @Model.Personal.Summary
-                </p>
-
-                <div class="flex flex-wrap gap-3 pt-2">
-                    <a href="mailto:@Model.Personal.Email"
-                       class="flex items-center gap-2 px-5 py-2.5 bg-primary text-dark font-semibold rounded-lg text-sm hover:opacity-90 transition-all font-mono">
-                        ✉ contact me
-                    </a>
-                    <a href="@Model.Personal.LinkedIn" target="_blank"
-                       class="flex items-center gap-2 px-5 py-2.5 border border-border text-slate-300 rounded-lg text-sm hover:border-primary hover:text-primary transition-all font-mono">
-                        in linkedin
-                    </a>
-                    <a href="@Model.Personal.GitHub" target="_blank"
-                       class="flex items-center gap-2 px-5 py-2.5 border border-border text-slate-300 rounded-lg text-sm hover:border-primary hover:text-primary transition-all font-mono">
-                        ⌥ github
-                    </a>
-                </div>
-
-                <div class="flex items-center gap-6 pt-4 text-xs font-mono text-muted">
-                    <span class="flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-                        @Model.Personal.Location
-                    </span>
-                    <span>@Model.Personal.Phone</span>
-                </div>
-            </div>
-
-            <!-- Terminal Card -->
-            <div class="flex-shrink-0 w-full max-w-md">
-                <div class="rounded-xl border border-border bg-card overflow-hidden shadow-2xl">
-                    <!-- Title bar -->
-                    <div class="flex items-center gap-2 px-4 py-3 bg-surface border-b border-border">
-                        <span class="w-3 h-3 rounded-full bg-red-500 opacity-70"></span>
-                        <span class="w-3 h-3 rounded-full bg-yellow-500 opacity-70"></span>
-                        <span class="w-3 h-3 rounded-full bg-green-500 opacity-70"></span>
-                        <span class="ml-2 font-mono text-xs text-muted">ali-aljawhi.cs</span>
-                    </div>
-                    <div class="p-6 font-mono text-sm leading-7">
-                        <p><span class="text-blue-400">public class</span> <span class="text-primary">Developer</span></p>
-                        <p>{</p>
-                        <p class="pl-4"><span class="text-blue-400">string</span> <span class="text-slate-300">Name</span> <span class="text-muted">= </span><span class="text-yellow-300">"Ali Aljawhi"</span>;</p>
-                        <p class="pl-4"><span class="text-blue-400">string</span> <span class="text-slate-300">Role</span> <span class="text-muted">= </span><span class="text-yellow-300">".NET Backend"</span>;</p>
-                        <p class="pl-4"><span class="text-blue-400">int</span> <span class="text-slate-300">Experience</span> <span class="text-muted">= </span><span class="text-orange-400">2</span>;</p>
-                        <p class="pl-4"><span class="text-blue-400">bool</span> <span class="text-slate-300">OpenToWork</span> <span class="text-muted">= </span><span class="text-green-400">true</span>;</p>
-                        <p class="pl-4"><span class="text-blue-400">string[]</span> <span class="text-slate-300">Stack</span> <span class="text-muted">= {</span></p>
-                        <p class="pl-8"><span class="text-yellow-300">"ASP.NET Core"</span>,</p>
-                        <p class="pl-8"><span class="text-yellow-300">"Clean Architecture"</span>,</p>
-                        <p class="pl-8"><span class="text-yellow-300">"SQL Server"</span>,</p>
-                        <p class="pl-8"><span class="text-yellow-300">"JWT Auth"</span></p>
-                        <p class="pl-4"><span class="text-muted">};</span></p>
-                        <p>}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Stats -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 border-t border-border pt-10">
-            @foreach (var (label, val) in new[] { ("Years Experience","2+"), ("Projects Delivered","5+"), ("Technologies","10+"), ("Architecture","Clean") })
-            {
-                <div class="text-center space-y-1">
-                    <div class="font-display text-3xl font-bold text-primary">@val</div>
-                    <div class="font-mono text-xs text-muted">@label</div>
-                </div>
-            }
-        </div>
+<!-- ── NAV ── -->
+<nav style="position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(14px);background:rgba(10,15,30,.85);border-bottom:1px solid #1e2d47;">
+  <div style="max-width:1100px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;">
+    <a href="#hero" style="font-family:'JetBrains Mono',monospace;color:#00d4aa;font-weight:700;font-size:.85rem;text-decoration:none;">
+      <span style="color:#64748b;">~/</span>ali-aljawhi
+    </a>
+    <div style="display:flex;gap:28px;align-items:center;">
+      <a href="#about"      class="nav-link">about</a>
+      <a href="#skills"     class="nav-link">skills</a>
+      <a href="#projects"   class="nav-link">projects</a>
+      <a href="#experience" class="nav-link">experience</a>
+      <a href="#contact"    class="nav-link">contact</a>
+      <a href="mailto:alialjawhi0@gmail.com"
+         style="font-family:'JetBrains Mono',monospace;font-size:.75rem;padding:7px 16px;border-radius:8px;border:1px solid #00d4aa;color:#00d4aa;text-decoration:none;transition:all .2s;"
+         onmouseover="this.style.background='#00d4aa';this.style.color='#0a0f1e';"
+         onmouseout="this.style.background='transparent';this.style.color='#00d4aa';">
+        hire me
+      </a>
     </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero" style="min-height:100vh;display:flex;align-items:center;padding:100px 24px 60px;position:relative;overflow:hidden;">
+  <div class="glow-orb" style="width:700px;height:700px;top:50%;left:50%;transform:translate(-50%,-55%);"></div>
+  <div style="max-width:1100px;margin:0 auto;width:100%;">
+    <div style="display:flex;flex-wrap:wrap;gap:60px;align-items:center;">
+
+      <!-- Left -->
+      <div style="flex:1;min-width:280px;display:flex;flex-direction:column;gap:20px;" class="reveal">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.75rem;color:#00d4aa;letter-spacing:.18em;text-transform:uppercase;">&gt; hello world</div>
+
+        <h1 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(2.4rem,5vw,3.6rem);font-weight:700;color:#f1f5f9;line-height:1.15;margin:0;">
+          Ali Omer<br/>Aljawhi
+        </h1>
+
+        <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:1.1rem;color:#00d4aa;font-weight:600;">
+          Backend / .NET Developer
+          <span class="animate-blink" style="color:#64748b;">_</span>
+        </div>
+
+        <p style="color:#94a3b8;line-height:1.75;font-size:.92rem;max-width:480px;margin:0;">
+          Backend developer with strong experience in ASP.NET Core, Web APIs, and SQL Server.
+          Skilled in building scalable systems using clean architecture, repository pattern, JWT authentication,
+          and multi-tenant solutions. Passionate about performance optimization and system design.
+        </p>
+
+        <div style="display:flex;flex-wrap:wrap;gap:12px;padding-top:6px;">
+          <a href="mailto:alialjawhi0@gmail.com"
+             style="display:flex;align-items:center;gap:8px;padding:10px 22px;background:#00d4aa;color:#0a0f1e;font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:700;border-radius:9px;text-decoration:none;transition:opacity .2s;"
+             onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">✉ contact me</a>
+          <a href="https://www.linkedin.com/in/ali-aljawhi" target="_blank"
+             style="display:flex;align-items:center;gap:8px;padding:10px 22px;border:1px solid #1e2d47;color:#cbd5e1;font-family:'JetBrains Mono',monospace;font-size:.8rem;border-radius:9px;text-decoration:none;transition:all .2s;"
+             onmouseover="this.style.borderColor='#00d4aa';this.style.color='#00d4aa';" onmouseout="this.style.borderColor='#1e2d47';this.style.color='#cbd5e1';">in linkedin</a>
+          <a href="https://github.com/aljawhi2" target="_blank"
+             style="display:flex;align-items:center;gap:8px;padding:10px 22px;border:1px solid #1e2d47;color:#cbd5e1;font-family:'JetBrains Mono',monospace;font-size:.8rem;border-radius:9px;text-decoration:none;transition:all .2s;"
+             onmouseover="this.style.borderColor='#00d4aa';this.style.color='#00d4aa';" onmouseout="this.style.borderColor='#1e2d47';this.style.color='#cbd5e1';">⌥ github</a>
+        </div>
+
+        <div style="display:flex;gap:24px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#64748b;padding-top:8px;flex-wrap:wrap;">
+          <span style="display:flex;align-items:center;gap:6px;">
+            <span style="width:8px;height:8px;border-radius:50%;background:#00d4aa;" class="animate-pulse2"></span>
+            Riyadh, Saudi Arabia
+          </span>
+          <span>+966552701385</span>
+        </div>
+      </div>
+
+      <!-- Terminal Card -->
+      <div style="flex-shrink:0;width:100%;max-width:420px;" class="reveal" style="animation-delay:.15s">
+        <div style="border-radius:14px;border:1px solid #1e2d47;background:#1a2235;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5);">
+          <div style="display:flex;align-items:center;gap:8px;padding:12px 16px;background:#111827;border-bottom:1px solid #1e2d47;">
+            <span style="width:12px;height:12px;border-radius:50%;background:#ef4444;opacity:.7;"></span>
+            <span style="width:12px;height:12px;border-radius:50%;background:#eab308;opacity:.7;"></span>
+            <span style="width:12px;height:12px;border-radius:50%;background:#22c55e;opacity:.7;"></span>
+            <span style="margin-left:8px;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#64748b;">ali-aljawhi.cs</span>
+          </div>
+          <div style="padding:22px 24px;font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:1.9;color:#cbd5e1;">
+            <div><span style="color:#60a5fa;">public class</span> <span style="color:#00d4aa;">Developer</span></div>
+            <div>{</div>
+            <div style="padding-left:20px;"><span style="color:#60a5fa;">string</span> <span style="color:#e2e8f0;">Name</span> <span style="color:#64748b;">= </span><span style="color:#fde047;">"Ali Aljawhi"</span>;</div>
+            <div style="padding-left:20px;"><span style="color:#60a5fa;">string</span> <span style="color:#e2e8f0;">Role</span> <span style="color:#64748b;">= </span><span style="color:#fde047;">".NET Backend"</span>;</div>
+            <div style="padding-left:20px;"><span style="color:#60a5fa;">int</span> <span style="color:#e2e8f0;">Experience</span> <span style="color:#64748b;">= </span><span style="color:#fb923c;">2</span>;</div>
+            <div style="padding-left:20px;"><span style="color:#60a5fa;">bool</span> <span style="color:#e2e8f0;">OpenToWork</span> <span style="color:#64748b;">= </span><span style="color:#4ade80;">true</span>;</div>
+            <div style="padding-left:20px;"><span style="color:#60a5fa;">string[]</span> <span style="color:#e2e8f0;">Stack</span> <span style="color:#64748b;">= {</span></div>
+            <div style="padding-left:40px;"><span style="color:#fde047;">"ASP.NET Core"</span>,</div>
+            <div style="padding-left:40px;"><span style="color:#fde047;">"Clean Architecture"</span>,</div>
+            <div style="padding-left:40px;"><span style="color:#fde047;">"SQL Server"</span>,</div>
+            <div style="padding-left:40px;"><span style="color:#fde047;">"JWT Auth"</span></div>
+            <div style="padding-left:20px;"><span style="color:#64748b;">};</span></div>
+            <div>}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:64px;border-top:1px solid #1e2d47;padding-top:40px;" class="reveal">
+      <div style="text-align:center;">
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:#00d4aa;">2+</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#64748b;margin-top:4px;">Years Experience</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:#00d4aa;">5+</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#64748b;margin-top:4px;">Projects Delivered</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:#00d4aa;">10+</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#64748b;margin-top:4px;">Technologies</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:#00d4aa;">Clean</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#64748b;margin-top:4px;">Architecture</div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- ═══════════════════════════ SKILLS ═══════════════════════════ -->
-<section id="skills" class="py-20">
-    <div class="max-w-6xl mx-auto px-6">
-        <div class="mb-12 space-y-2">
-            <p class="font-mono text-xs text-primary tracking-widest"># technical_skills</p>
-            <h2 class="section-title">What I <span>Work With</span></h2>
-        </div>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-            @foreach (var skill in Model.Skills)
-            {
-                <div class="bg-card rounded-xl border border-border p-6 card-hover">
-                    <h3 class="font-display font-semibold text-slate-200 mb-4 text-sm uppercase tracking-wider">
-                        @skill.Category
-                    </h3>
-                    <div class="flex flex-wrap gap-2">
-                        @foreach (var item in skill.Items)
-                        {
-                            <span class="tag">@item</span>
-                        }
-                    </div>
-                </div>
-            }
-        </div>
+<!-- ── SKILLS ── -->
+<section id="skills" style="padding:80px 24px;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="margin-bottom:48px;" class="reveal">
+      <p style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#00d4aa;letter-spacing:.18em;margin:0 0 8px;"># technical_skills</p>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700;color:#f1f5f9;margin:0;">What I <span style="color:#00d4aa;">Work With</span></h2>
     </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;">
+
+      <!-- Backend -->
+      <div class="card-hover reveal" style="background:#1a2235;border:1px solid #1e2d47;border-radius:14px;padding:24px;">
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:.75rem;font-weight:600;color:#e2e8f0;text-transform:uppercase;letter-spacing:.1em;margin:0 0 16px;">Backend</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;">
+          <span class="tag">ASP.NET Core MVC</span><span class="tag">Web API</span><span class="tag">Entity Framework</span>
+          <span class="tag">Clean Architecture</span><span class="tag">SOLID</span><span class="tag">Repository Pattern</span>
+          <span class="tag">JWT Auth</span><span class="tag">Role-based Auth</span><span class="tag">Multi-Tenant</span>
+        </div>
+      </div>
+
+      <!-- Database -->
+      <div class="card-hover reveal" style="background:#1a2235;border:1px solid #1e2d47;border-radius:14px;padding:24px;">
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:.75rem;font-weight:600;color:#e2e8f0;text-transform:uppercase;letter-spacing:.1em;margin:0 0 16px;">Database</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;">
+          <span class="tag">SQL Server</span><span class="tag">Database Design</span>
+          <span class="tag">Query Optimization</span><span class="tag">FK Constraints</span>
+        </div>
+      </div>
+
+      <!-- Frontend -->
+      <div class="card-hover reveal" style="background:#1a2235;border:1px solid #1e2d47;border-radius:14px;padding:24px;">
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:.75rem;font-weight:600;color:#e2e8f0;text-transform:uppercase;letter-spacing:.1em;margin:0 0 16px;">Frontend (Basic)</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;">
+          <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Bootstrap</span>
+        </div>
+      </div>
+
+      <!-- Tools -->
+      <div class="card-hover reveal" style="background:#1a2235;border:1px solid #1e2d47;border-radius:14px;padding:24px;">
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:.75rem;font-weight:600;color:#e2e8f0;text-transform:uppercase;letter-spacing:.1em;margin:0 0 16px;">Tools & DevOps</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;">
+          <span class="tag">Git & GitHub</span><span class="tag">REST APIs</span><span class="tag">Swagger</span>
+          <span class="tag">Docker</span><span class="tag">Azure</span><span class="tag">AWS</span><span class="tag">Firebase FCM</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>
 
-<!-- ═══════════════════════════ PROJECTS ═══════════════════════════ -->
-<section id="projects" class="py-20 bg-surface/30">
-    <div class="max-w-6xl mx-auto px-6">
-        <div class="mb-12 space-y-2">
-            <p class="font-mono text-xs text-primary tracking-widest"># featured_projects</p>
-            <h2 class="section-title">Things I've <span>Built</span></h2>
-        </div>
-
-        <div class="grid lg:grid-cols-2 gap-6">
-            @for (int i = 0; i < Model.Projects.Count; i++)
-            {
-                var project = Model.Projects[i];
-                <div class="bg-card rounded-xl border border-border p-7 card-hover flex flex-col gap-5">
-                    <div>
-                        <div class="flex items-start justify-between mb-3">
-                            <span class="font-mono text-xs text-primary">0@(i+1).</span>
-                            <div class="flex gap-2">
-                                <span class="w-4 h-4 text-muted opacity-50">⌥</span>
-                                <span class="w-4 h-4 text-muted opacity-50">⊕</span>
-                            </div>
-                        </div>
-                        <h3 class="font-display text-lg font-semibold text-slate-100 mb-3">@project.Title</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed">@project.Description</p>
-                    </div>
-
-                    <ul class="space-y-2 flex-1">
-                        @foreach (var h in project.Highlights)
-                        {
-                            <li class="flex items-start gap-2 text-sm text-slate-400">
-                                <span class="text-primary mt-1 flex-shrink-0">›</span>
-                                @h
-                            </li>
-                        }
-                    </ul>
-
-                    <div class="flex flex-wrap gap-2 pt-2 border-t border-border">
-                        @foreach (var tech in project.Technologies)
-                        {
-                            <span class="tag">@tech</span>
-                        }
-                    </div>
-                </div>
-            }
-        </div>
+<!-- ── PROJECTS ── -->
+<section id="projects" style="padding:80px 24px;background:rgba(17,24,39,.4);">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="margin-bottom:48px;" class="reveal">
+      <p style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#00d4aa;letter-spacing:.18em;margin:0 0 8px;"># featured_projects</p>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700;color:#f1f5f9;margin:0;">Things I've <span style="color:#00d4aa;">Built</span></h2>
     </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;">
+
+      <!-- Project 1 -->
+      <div class="card-hover reveal" style="background:#1a2235;border:1px solid #1e2d47;border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:18px;">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#00d4aa;margin-bottom:10px;">01.</div>
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:600;color:#f1f5f9;margin:0 0 10px;">Multi-Tenant Management System</h3>
+          <p style="color:#94a3b8;font-size:.85rem;line-height:1.7;margin:0;">A robust tenant-aware backend ensuring full data isolation and security across multiple tenants.</p>
+        </div>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;flex:1;">
+          <li style="display:flex;gap:8px;font-size:.82rem;color:#94a3b8;"><span style="color:#00d4aa;flex-shrink:0;">›</span> Built tenant-aware backend using ASP.NET Core MVC</li>
+          <li style="display:flex;gap:8px;font-size:.82rem;color:#94a3b8;"><span style="color:#00d4aa;flex-shrink:0;">›</span> Implemented global query filters for tenant isolation</li>
+          <li style="display:flex;gap:8px;font-size:.82rem;color:#94a3b8;"><span style="color:#00d4aa;flex-shrink:0;">›</span> Designed secure JWT-based authentication</li>
+          <li style="display:flex;gap:8px;font-size:.82rem;color:#94a3b8;"><span style="color:#00d4aa;flex-shrink:0;">›</span> Optimized database relations and FK constraints</li>
+        </ul>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;padding-top:12px;border-top:1px solid #1e2d47;">
+          <span class="tag">ASP.NET Core</span><span class="tag">JWT</span><span class="tag">SQL Server</span><span class="tag">EF Core</span>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="card-hover reveal" style="background:#1a2235;border:1px solid #1e2d47;border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:18px;">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#00d4aa;margin-bottom:10px;">02.</div>
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:600;color:#f1f5f9;margin:0 0 10px;">Order & Delivery Management System</h3>
+          <p style="color:#94a3b8;font-size:.85rem;line-height:1.7;margin:0;">Broker-based order system connecting factories, companies, drivers, and customers with full lifecycle management.</p>
+        </div>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;flex:1;">
+          <li style="display:flex;gap:8px;font-size:.82rem;color:#94a3b8;"><span style="color:#00d4aa;flex-shrink:0;">›</span> Full order lifecycle with multiple statuses</li>
+          <li style="display:flex;gap:8px;font-size:.82rem;color:#94a3b8;"><span style="color:#00d4aa;flex-shrink:0;">›</span> Mobile APIs for drivers built on Web API</li>
+          <li style="display:flex;gap:8px;font-size:.82rem;color:#94a3b8;"><span style="color:#00d4aa;flex-shrink:0;">›</span> Clean Architecture: Controller → Service → Repository</li>
+          <li style="display:flex;gap:8px;font-size:.82rem;color:#94a3b8;"><span style="color:#00d4aa;flex-shrink:0;">›</span> Firebase FCM real-time push notifications</li>
+          <li style="display:flex;gap:8px;font-size:.82rem;color:#94a3b8;"><span style="color:#00d4aa;flex-shrink:0;">›</span> Role-based access: companies, drivers, customers</li>
+        </ul>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;padding-top:12px;border-top:1px solid #1e2d47;">
+          <span class="tag">ASP.NET Core</span><span class="tag">Web API</span><span class="tag">Firebase FCM</span><span class="tag">Docker</span><span class="tag">EF Core</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>
 
-<!-- ═══════════════════════════ EXPERIENCE ═══════════════════════════ -->
-<section id="experience" class="py-20">
-    <div class="max-w-6xl mx-auto px-6">
-        <div class="mb-12 space-y-2">
-            <p class="font-mono text-xs text-primary tracking-widest"># work_experience</p>
-            <h2 class="section-title">Where I've <span>Worked</span></h2>
-        </div>
-
-        <div class="max-w-2xl space-y-8">
-            @foreach (var exp in Model.Experiences)
-            {
-                <div class="flex gap-5">
-                    <div class="flex flex-col items-center">
-                        <div class="timeline-dot mt-1.5"></div>
-                        <div class="w-px flex-1 mt-2" style="background: linear-gradient(#00d4aa44, transparent)"></div>
-                    </div>
-                    <div class="pb-8">
-                        <div class="flex flex-wrap items-center gap-3 mb-1">
-                            <h3 class="font-display font-semibold text-slate-100 text-lg">@exp.Role</h3>
-                            <span class="tag">@exp.Company</span>
-                        </div>
-                        <div class="font-mono text-xs text-muted mb-4">@exp.Period · @exp.Location</div>
-                        <ul class="space-y-2">
-                            @foreach (var r in exp.Responsibilities)
-                            {
-                                <li class="flex items-start gap-2 text-sm text-slate-400">
-                                    <span class="text-primary mt-1">›</span>
-                                    @r
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            }
-
-            <!-- Education -->
-            <div class="flex gap-5">
-                <div class="flex flex-col items-center">
-                    <div class="timeline-dot mt-1.5" style="background:#3b82f6; box-shadow: 0 0 10px #3b82f688;"></div>
-                </div>
-                <div>
-                    <div class="flex flex-wrap items-center gap-3 mb-1">
-                        <h3 class="font-display font-semibold text-slate-100 text-lg">@Model.Education.Degree</h3>
-                        <span class="tag" style="background:rgba(59,130,246,0.1); color:#3b82f6; border-color: rgba(59,130,246,0.3)">education</span>
-                    </div>
-                    <div class="font-mono text-xs text-muted mb-2">@Model.Education.Period · @Model.Education.Location</div>
-                    <p class="text-sm text-slate-400">@Model.Education.University · <span class="text-primary font-mono">@Model.Education.Grade</span></p>
-                </div>
-            </div>
-        </div>
+<!-- ── EXPERIENCE ── -->
+<section id="experience" style="padding:80px 24px;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="margin-bottom:48px;" class="reveal">
+      <p style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#00d4aa;letter-spacing:.18em;margin:0 0 8px;"># work_experience</p>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700;color:#f1f5f9;margin:0;">Where I've <span style="color:#00d4aa;">Worked</span></h2>
     </div>
+
+    <div style="max-width:680px;display:flex;flex-direction:column;gap:0;">
+
+      <!-- Job -->
+      <div style="display:flex;gap:18px;" class="reveal">
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div class="dot-teal"></div>
+          <div class="timeline-line"></div>
+        </div>
+        <div style="padding-bottom:36px;">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:4px;">
+            <h3 style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:600;color:#f1f5f9;margin:0;">.NET Developer</h3>
+            <span class="tag">Aljohi Group</span>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#64748b;margin-bottom:14px;">September 2023 – Present · Riyadh, Saudi Arabia</div>
+          <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;">
+            <li style="display:flex;gap:8px;font-size:.85rem;color:#94a3b8;"><span style="color:#00d4aa;">›</span> Developed backend logic using ASP.NET Core MVC</li>
+            <li style="display:flex;gap:8px;font-size:.85rem;color:#94a3b8;"><span style="color:#00d4aa;">›</span> Designed REST APIs and database schemas</li>
+            <li style="display:flex;gap:8px;font-size:.85rem;color:#94a3b8;"><span style="color:#00d4aa;">›</span> Applied clean architecture principles across projects</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div style="display:flex;gap:18px;" class="reveal">
+        <div style="display:flex;flex-direction:column;align-items:center;">
+          <div class="dot-blue"></div>
+        </div>
+        <div>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:4px;">
+            <h3 style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:600;color:#f1f5f9;margin:0;">Bachelor's Degree</h3>
+            <span class="tag" style="background:rgba(59,130,246,.1);color:#3b82f6;border-color:rgba(59,130,246,.25);">education</span>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#64748b;margin-bottom:6px;">Sep 2019 – Jun 2023 · Hadhramout, Yemen</div>
+          <p style="font-size:.85rem;color:#94a3b8;margin:0;">Seiyun University · GPA <span style="color:#00d4aa;font-family:'JetBrains Mono',monospace;">83%</span></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>
 
-<!-- ═══════════════════════════ CONTACT ═══════════════════════════ -->
-<section id="contact" class="py-20 bg-surface/30">
-    <div class="max-w-6xl mx-auto px-6">
-        <div class="mb-12 space-y-2">
-            <p class="font-mono text-xs text-primary tracking-widest"># get_in_touch</p>
-            <h2 class="section-title">Let's <span>Connect</span></h2>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-8 max-w-3xl">
-            @foreach (var (icon, label, val, href) in new[] {
-                ("✉", "Email", Model.Personal.Email, "mailto:"+Model.Personal.Email),
-                ("☎", "Phone", Model.Personal.Phone, "tel:"+Model.Personal.Phone),
-                ("in", "LinkedIn", "ali-aljawhi", Model.Personal.LinkedIn),
-                ("⌥", "GitHub", "alialjawhi", Model.Personal.GitHub)
-            })
-            {
-                <a href="@href" target="_blank"
-                   class="flex items-center gap-4 bg-card rounded-xl border border-border p-5 card-hover group">
-                    <div class="w-10 h-10 rounded-lg flex items-center justify-center text-primary font-mono font-bold text-sm"
-                         style="background: rgba(0,212,170,0.1)">@icon</div>
-                    <div>
-                        <div class="font-mono text-xs text-muted">@label</div>
-                        <div class="text-slate-300 text-sm font-medium group-hover:text-primary transition-colors">@val</div>
-                    </div>
-                </a>
-            }
-        </div>
+<!-- ── CONTACT ── -->
+<section id="contact" style="padding:80px 24px;background:rgba(17,24,39,.4);">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div style="margin-bottom:48px;" class="reveal">
+      <p style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#00d4aa;letter-spacing:.18em;margin:0 0 8px;"># get_in_touch</p>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700;color:#f1f5f9;margin:0;">Let's <span style="color:#00d4aa;">Connect</span></h2>
     </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;max-width:760px;">
+
+      <a href="mailto:alialjawhi0@gmail.com" class="card-hover reveal"
+         style="display:flex;align-items:center;gap:14px;background:#1a2235;border:1px solid #1e2d47;border-radius:14px;padding:20px;text-decoration:none;">
+        <div style="width:42px;height:42px;border-radius:10px;background:rgba(0,212,170,.1);display:flex;align-items:center;justify-content:center;font-size:1rem;color:#00d4aa;font-family:'JetBrains Mono',monospace;font-weight:700;flex-shrink:0;">✉</div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:#64748b;">Email</div>
+          <div style="color:#cbd5e1;font-size:.82rem;font-weight:500;margin-top:2px;">alialjawhi0@gmail.com</div>
+        </div>
+      </a>
+
+      <a href="tel:+966552701385" class="card-hover reveal"
+         style="display:flex;align-items:center;gap:14px;background:#1a2235;border:1px solid #1e2d47;border-radius:14px;padding:20px;text-decoration:none;">
+        <div style="width:42px;height:42px;border-radius:10px;background:rgba(0,212,170,.1);display:flex;align-items:center;justify-content:center;font-size:1rem;color:#00d4aa;font-family:'JetBrains Mono',monospace;font-weight:700;flex-shrink:0;">☎</div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:#64748b;">Phone</div>
+          <div style="color:#cbd5e1;font-size:.82rem;font-weight:500;margin-top:2px;">+966552701385</div>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/in/ali-aljawhi" target="_blank" class="card-hover reveal"
+         style="display:flex;align-items:center;gap:14px;background:#1a2235;border:1px solid #1e2d47;border-radius:14px;padding:20px;text-decoration:none;">
+        <div style="width:42px;height:42px;border-radius:10px;background:rgba(0,212,170,.1);display:flex;align-items:center;justify-content:center;font-size:.85rem;color:#00d4aa;font-family:'JetBrains Mono',monospace;font-weight:700;flex-shrink:0;">in</div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:#64748b;">LinkedIn</div>
+          <div style="color:#cbd5e1;font-size:.82rem;font-weight:500;margin-top:2px;">ali-aljawhi</div>
+        </div>
+      </a>
+
+      <a href="https://github.com/aljawhi2" target="_blank" class="card-hover reveal"
+         style="display:flex;align-items:center;gap:14px;background:#1a2235;border:1px solid #1e2d47;border-radius:14px;padding:20px;text-decoration:none;">
+        <div style="width:42px;height:42px;border-radius:10px;background:rgba(0,212,170,.1);display:flex;align-items:center;justify-content:center;font-size:.85rem;color:#00d4aa;font-family:'JetBrains Mono',monospace;font-weight:700;flex-shrink:0;">⌥</div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:#64748b;">GitHub</div>
+          <div style="color:#cbd5e1;font-size:.82rem;font-weight:500;margin-top:2px;">aljawhi2</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
 </section>
+
+<!-- ── FOOTER ── -->
+<footer style="border-top:1px solid #1e2d47;padding:28px 24px;text-align:center;">
+  <p style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#64748b;margin:0;">
+    <span style="color:#00d4aa;">Ali Aljawhi</span> · Backend .NET Developer · Riyadh, Saudi Arabia · 2025
+  </p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Active nav
+  const sections = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 90) cur = s.id; });
+    links.forEach(l => {
+      const active = l.getAttribute('href') === '#' + cur;
+      l.style.color = active ? '#00d4aa' : '#94a3b8';
+    });
+  });
+</script>
+</body>
+</html>
