@@ -1,0 +1,254 @@
+@model AliPortfolio.Models.PortfolioViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Ali Aljawhi – .NET Developer";
+}
+
+<!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+<section id="hero" class="min-h-screen flex items-center pt-20 pb-10 relative overflow-hidden">
+    <!-- Glow orb -->
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-5"
+         style="background: radial-gradient(circle, #00d4aa, transparent 70%); pointer-events:none;"></div>
+
+    <div class="max-w-6xl mx-auto px-6 w-full">
+        <div class="flex flex-col lg:flex-row items-center gap-16">
+            <div class="flex-1 space-y-6">
+                <div class="font-mono text-sm text-primary opacity-80 tracking-widest uppercase">
+                    &gt; hello world
+                </div>
+
+                <h1 class="font-display text-5xl md:text-6xl font-bold leading-tight text-slate-100">
+                    @Model.Personal.Name
+                </h1>
+
+                <div class="font-mono text-xl text-primary font-semibold flex items-center gap-2">
+                    <span>@Model.Personal.Title</span>
+                    <span class="animate-blink text-muted">_</span>
+                </div>
+
+                <p class="text-slate-400 leading-relaxed max-w-xl text-sm md:text-base">
+                    @Model.Personal.Summary
+                </p>
+
+                <div class="flex flex-wrap gap-3 pt-2">
+                    <a href="mailto:@Model.Personal.Email"
+                       class="flex items-center gap-2 px-5 py-2.5 bg-primary text-dark font-semibold rounded-lg text-sm hover:opacity-90 transition-all font-mono">
+                        ✉ contact me
+                    </a>
+                    <a href="@Model.Personal.LinkedIn" target="_blank"
+                       class="flex items-center gap-2 px-5 py-2.5 border border-border text-slate-300 rounded-lg text-sm hover:border-primary hover:text-primary transition-all font-mono">
+                        in linkedin
+                    </a>
+                    <a href="@Model.Personal.GitHub" target="_blank"
+                       class="flex items-center gap-2 px-5 py-2.5 border border-border text-slate-300 rounded-lg text-sm hover:border-primary hover:text-primary transition-all font-mono">
+                        ⌥ github
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-6 pt-4 text-xs font-mono text-muted">
+                    <span class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        @Model.Personal.Location
+                    </span>
+                    <span>@Model.Personal.Phone</span>
+                </div>
+            </div>
+
+            <!-- Terminal Card -->
+            <div class="flex-shrink-0 w-full max-w-md">
+                <div class="rounded-xl border border-border bg-card overflow-hidden shadow-2xl">
+                    <!-- Title bar -->
+                    <div class="flex items-center gap-2 px-4 py-3 bg-surface border-b border-border">
+                        <span class="w-3 h-3 rounded-full bg-red-500 opacity-70"></span>
+                        <span class="w-3 h-3 rounded-full bg-yellow-500 opacity-70"></span>
+                        <span class="w-3 h-3 rounded-full bg-green-500 opacity-70"></span>
+                        <span class="ml-2 font-mono text-xs text-muted">ali-aljawhi.cs</span>
+                    </div>
+                    <div class="p-6 font-mono text-sm leading-7">
+                        <p><span class="text-blue-400">public class</span> <span class="text-primary">Developer</span></p>
+                        <p>{</p>
+                        <p class="pl-4"><span class="text-blue-400">string</span> <span class="text-slate-300">Name</span> <span class="text-muted">= </span><span class="text-yellow-300">"Ali Aljawhi"</span>;</p>
+                        <p class="pl-4"><span class="text-blue-400">string</span> <span class="text-slate-300">Role</span> <span class="text-muted">= </span><span class="text-yellow-300">".NET Backend"</span>;</p>
+                        <p class="pl-4"><span class="text-blue-400">int</span> <span class="text-slate-300">Experience</span> <span class="text-muted">= </span><span class="text-orange-400">2</span>;</p>
+                        <p class="pl-4"><span class="text-blue-400">bool</span> <span class="text-slate-300">OpenToWork</span> <span class="text-muted">= </span><span class="text-green-400">true</span>;</p>
+                        <p class="pl-4"><span class="text-blue-400">string[]</span> <span class="text-slate-300">Stack</span> <span class="text-muted">= {</span></p>
+                        <p class="pl-8"><span class="text-yellow-300">"ASP.NET Core"</span>,</p>
+                        <p class="pl-8"><span class="text-yellow-300">"Clean Architecture"</span>,</p>
+                        <p class="pl-8"><span class="text-yellow-300">"SQL Server"</span>,</p>
+                        <p class="pl-8"><span class="text-yellow-300">"JWT Auth"</span></p>
+                        <p class="pl-4"><span class="text-muted">};</span></p>
+                        <p>}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 border-t border-border pt-10">
+            @foreach (var (label, val) in new[] { ("Years Experience","2+"), ("Projects Delivered","5+"), ("Technologies","10+"), ("Architecture","Clean") })
+            {
+                <div class="text-center space-y-1">
+                    <div class="font-display text-3xl font-bold text-primary">@val</div>
+                    <div class="font-mono text-xs text-muted">@label</div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════ SKILLS ═══════════════════════════ -->
+<section id="skills" class="py-20">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="mb-12 space-y-2">
+            <p class="font-mono text-xs text-primary tracking-widest"># technical_skills</p>
+            <h2 class="section-title">What I <span>Work With</span></h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+            @foreach (var skill in Model.Skills)
+            {
+                <div class="bg-card rounded-xl border border-border p-6 card-hover">
+                    <h3 class="font-display font-semibold text-slate-200 mb-4 text-sm uppercase tracking-wider">
+                        @skill.Category
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        @foreach (var item in skill.Items)
+                        {
+                            <span class="tag">@item</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════ PROJECTS ═══════════════════════════ -->
+<section id="projects" class="py-20 bg-surface/30">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="mb-12 space-y-2">
+            <p class="font-mono text-xs text-primary tracking-widest"># featured_projects</p>
+            <h2 class="section-title">Things I've <span>Built</span></h2>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-6">
+            @for (int i = 0; i < Model.Projects.Count; i++)
+            {
+                var project = Model.Projects[i];
+                <div class="bg-card rounded-xl border border-border p-7 card-hover flex flex-col gap-5">
+                    <div>
+                        <div class="flex items-start justify-between mb-3">
+                            <span class="font-mono text-xs text-primary">0@(i+1).</span>
+                            <div class="flex gap-2">
+                                <span class="w-4 h-4 text-muted opacity-50">⌥</span>
+                                <span class="w-4 h-4 text-muted opacity-50">⊕</span>
+                            </div>
+                        </div>
+                        <h3 class="font-display text-lg font-semibold text-slate-100 mb-3">@project.Title</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">@project.Description</p>
+                    </div>
+
+                    <ul class="space-y-2 flex-1">
+                        @foreach (var h in project.Highlights)
+                        {
+                            <li class="flex items-start gap-2 text-sm text-slate-400">
+                                <span class="text-primary mt-1 flex-shrink-0">›</span>
+                                @h
+                            </li>
+                        }
+                    </ul>
+
+                    <div class="flex flex-wrap gap-2 pt-2 border-t border-border">
+                        @foreach (var tech in project.Technologies)
+                        {
+                            <span class="tag">@tech</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════ EXPERIENCE ═══════════════════════════ -->
+<section id="experience" class="py-20">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="mb-12 space-y-2">
+            <p class="font-mono text-xs text-primary tracking-widest"># work_experience</p>
+            <h2 class="section-title">Where I've <span>Worked</span></h2>
+        </div>
+
+        <div class="max-w-2xl space-y-8">
+            @foreach (var exp in Model.Experiences)
+            {
+                <div class="flex gap-5">
+                    <div class="flex flex-col items-center">
+                        <div class="timeline-dot mt-1.5"></div>
+                        <div class="w-px flex-1 mt-2" style="background: linear-gradient(#00d4aa44, transparent)"></div>
+                    </div>
+                    <div class="pb-8">
+                        <div class="flex flex-wrap items-center gap-3 mb-1">
+                            <h3 class="font-display font-semibold text-slate-100 text-lg">@exp.Role</h3>
+                            <span class="tag">@exp.Company</span>
+                        </div>
+                        <div class="font-mono text-xs text-muted mb-4">@exp.Period · @exp.Location</div>
+                        <ul class="space-y-2">
+                            @foreach (var r in exp.Responsibilities)
+                            {
+                                <li class="flex items-start gap-2 text-sm text-slate-400">
+                                    <span class="text-primary mt-1">›</span>
+                                    @r
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+
+            <!-- Education -->
+            <div class="flex gap-5">
+                <div class="flex flex-col items-center">
+                    <div class="timeline-dot mt-1.5" style="background:#3b82f6; box-shadow: 0 0 10px #3b82f688;"></div>
+                </div>
+                <div>
+                    <div class="flex flex-wrap items-center gap-3 mb-1">
+                        <h3 class="font-display font-semibold text-slate-100 text-lg">@Model.Education.Degree</h3>
+                        <span class="tag" style="background:rgba(59,130,246,0.1); color:#3b82f6; border-color: rgba(59,130,246,0.3)">education</span>
+                    </div>
+                    <div class="font-mono text-xs text-muted mb-2">@Model.Education.Period · @Model.Education.Location</div>
+                    <p class="text-sm text-slate-400">@Model.Education.University · <span class="text-primary font-mono">@Model.Education.Grade</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════ CONTACT ═══════════════════════════ -->
+<section id="contact" class="py-20 bg-surface/30">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="mb-12 space-y-2">
+            <p class="font-mono text-xs text-primary tracking-widest"># get_in_touch</p>
+            <h2 class="section-title">Let's <span>Connect</span></h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 max-w-3xl">
+            @foreach (var (icon, label, val, href) in new[] {
+                ("✉", "Email", Model.Personal.Email, "mailto:"+Model.Personal.Email),
+                ("☎", "Phone", Model.Personal.Phone, "tel:"+Model.Personal.Phone),
+                ("in", "LinkedIn", "ali-aljawhi", Model.Personal.LinkedIn),
+                ("⌥", "GitHub", "alialjawhi", Model.Personal.GitHub)
+            })
+            {
+                <a href="@href" target="_blank"
+                   class="flex items-center gap-4 bg-card rounded-xl border border-border p-5 card-hover group">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center text-primary font-mono font-bold text-sm"
+                         style="background: rgba(0,212,170,0.1)">@icon</div>
+                    <div>
+                        <div class="font-mono text-xs text-muted">@label</div>
+                        <div class="text-slate-300 text-sm font-medium group-hover:text-primary transition-colors">@val</div>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+</section>

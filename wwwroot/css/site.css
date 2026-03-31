@@ -1,0 +1,8 @@
+/* Smooth scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0f1e; }
+::-webkit-scrollbar-thumb { background: #1e2d47; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #00d4aa44; }
+
+/* Selection */
+::selection { background: #00d4aa22; color: #00d4aa; }

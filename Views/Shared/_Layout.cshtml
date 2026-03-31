@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ali Aljawhi – .NET Developer</title>
+    <meta name="description" content="Backend .NET Developer specializing in ASP.NET Core, Clean Architecture, and scalable systems." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00d4aa',
+                        dark: '#0a0f1e',
+                        surface: '#111827',
+                        card: '#1a2235',
+                        border: '#1e2d47',
+                        muted: '#64748b',
+                        accent: '#3b82f6'
+                    },
+                    fontFamily: {
+                        mono: ['"JetBrains Mono"', 'Consolas', 'monospace'],
+                        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+                        display: ['"Space Grotesk"', 'sans-serif']
+                    },
+                    animation: {
+                        'fade-up': 'fadeUp 0.6s ease forwards',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'blink': 'blink 1s step-end infinite',
+                    },
+                    keyframes: {
+                        fadeUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        glow: { '0%': { boxShadow: '0 0 5px #00d4aa33' }, '100%': { boxShadow: '0 0 20px #00d4aa66' } },
+                        blink: { '0%, 100%': { opacity: '1' }, '50%': { opacity: '0' } },
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        html { scroll-behavior: smooth; }
+        body { background-color: #0a0f1e; }
+        .grid-bg {
+            background-image: linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .tag { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; font-weight: 500; background: rgba(0,212,170,0.08); color: #00d4aa; border: 1px solid rgba(0,212,170,0.2); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-4px); border-color: rgba(0,212,170,0.3); box-shadow: 0 8px 30px rgba(0,212,170,0.08); }
+        .nav-link { position: relative; color: #94a3b8; transition: color 0.2s; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; }
+        .nav-link:hover { color: #00d4aa; }
+        .nav-link::after { content:''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: #00d4aa; transition: width 0.2s; }
+        .nav-link:hover::after { width: 100%; }
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; color: #f1f5f9; }
+        .section-title span { color: #00d4aa; }
+        .timeline-dot { width: 10px; height: 10px; border-radius: 50%; background: #00d4aa; box-shadow: 0 0 10px #00d4aa88; flex-shrink: 0; }
+    </style>
+</head>
+<body class="grid-bg text-slate-300 font-sans antialiased">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-border" style="background: rgba(10,15,30,0.85)">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#hero" class="font-mono text-primary font-bold text-sm tracking-wider">
+                <span class="text-muted">~/</span>ali-aljawhi
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#about" class="nav-link">about</a>
+                <a href="#skills" class="nav-link">skills</a>
+                <a href="#projects" class="nav-link">projects</a>
+                <a href="#experience" class="nav-link">experience</a>
+                <a href="#contact" class="nav-link">contact</a>
+            </div>
+            <a href="mailto:alialjawhi0@gmail.com" class="hidden md:flex items-center gap-2 text-xs font-mono px-4 py-2 rounded border border-primary text-primary hover:bg-primary hover:text-dark transition-all">
+                hire me
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-border py-8 mt-20">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <p class="font-mono text-xs text-muted">
+                <span class="text-primary">Ali Aljawhi</span> · Built with ASP.NET Core MVC & Tailwind CSS · @DateTime.Now.Year
+            </p>
+        </div>
+    </footer>
+
+    <script src="~/js/site.js"></script>
+</body>
+</html>
